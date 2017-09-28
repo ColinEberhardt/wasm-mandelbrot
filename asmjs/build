@@ -1,0 +1,3 @@
+#!/bin/sh
+emsdk activate latest
+emcc mandelbrot.c -O3  -s ONLY_MY_CODE=1 -s EXPORTED_FUNCTIONS="['_mandelbrot', '_getImage']"

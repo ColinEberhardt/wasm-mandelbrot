@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <time.h>
+
 const int WIDTH = 1200;
 const int HEIGHT = 800;
 unsigned char image[WIDTH * HEIGHT * 4];
@@ -50,4 +53,17 @@ void mandelbrot(int maxIterations, double cx, double cy, double diameter) {
 
 unsigned char* getImage() {
   return &image[0];
+}
+
+
+int main() {
+  // printf() displays the string inside quotation
+  clock_t start = clock() ;
+  for (int i=0; i<10; i++) {
+    mandelbrot(10000, -0.7436447860, 0.1318252536, 0.00029336);
+  }
+  clock_t end = clock() ;
+  double elapsed_time = (end-start)/(double)CLOCKS_PER_SEC ;
+  printf("%lf", elapsed_time / 10.0);
+  return 0;
 }

@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <meta charset='utf-8' />
 <body>
+  <select id="mode">
+  </select>
   <button id='render'>render</button>
+  <br/>
   <canvas id='canvas' width='1200' height='800' style='width: 600px; height: 400px'></canvas>
-  <script src='js/mandelbrot.js'></script>
-  <script src='app.js'></script>
+
+  <script src='lib/system.js'></script>
+  <script>
+  SystemJS.import('./app.js');
+  </script>
 </body>

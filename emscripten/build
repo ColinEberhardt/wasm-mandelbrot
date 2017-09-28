@@ -1,2 +1,3 @@
 #!/bin/sh
-emcc mandelbrot.c -O3 -s WASM=1 -s SIDE_MODULE=1 -o mandelbrot.wasm
+emsdk activate sdk-incoming-64bit binaryen-master-64bit
+emcc mandelbrot.c -O1 -s WASM=1 -s SIDE_MODULE=1 -o mandelbrot.wasm

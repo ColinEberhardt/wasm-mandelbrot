@@ -1,3 +1,4 @@
 *.wast
 *.s
 *.ll
+node_modules

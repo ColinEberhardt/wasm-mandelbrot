@@ -43,3 +43,14 @@ const mandelbrot = (data, maxIterations, cx, cy, diameter) => {
     }
   }
 }
+
+const javascriptMandelbrot = (ctx, config) => {
+  const imgData = ctx.createImageData(WIDTH, HEIGHT);
+  mandelbrot(imgData.data, config.iterations, config.x, config.y, config.d)
+  ctx.putImageData(imgData, 0, 0);
+}
+
+module.exports = () => Promise.resolve({
+  render: javascriptMandelbrot,
+  name: 'JavaScript'
+});

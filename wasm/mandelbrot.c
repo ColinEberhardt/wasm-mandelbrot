@@ -14,11 +14,11 @@ unsigned char colour(int iteration, int offset, int scale) {
 }
 
 int iterateEquation(double x0, double y0, int maxiterations) {
-  double a = 0.0f, b = 0.0f, rx = 0.0f, ry = 0.0f;
+  double a = 0.0, b = 0.0, rx = 0.0, ry = 0.0;
   int iterations = 0;
-  while (iterations < maxiterations && (rx * rx + ry * ry <= 4.0f)) {
+  while (iterations < maxiterations && (rx * rx + ry * ry <= 4.0)) {
     rx = a * a - b * b + x0;
-    ry = 2.0f * a * b + y0;
+    ry = 2.0 * a * b + y0;
     a = rx;
     b = ry;
     iterations++;
@@ -32,8 +32,8 @@ double scale(double domainStart, double domainLength, int screenLength, double s
 
 void mandelbrot(int maxIterations, double cx, double cy, double diameter) {
   double verticalDiameter = diameter * HEIGHT / WIDTH;
-  for(double x = 0.0f; x < WIDTH; x++) {
-    for(double y = 0.0f; y < HEIGHT; y++) {
+  for(double x = 0.0; x < WIDTH; x++) {
+    for(double y = 0.0; y < HEIGHT; y++) {
       // map to mandelbrot coordinates
       double rx = scale(cx, diameter, WIDTH, x);
       double ry = scale(cy, verticalDiameter, HEIGHT, y);
