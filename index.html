@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <meta charset='utf-8' />
-<body>
-  <select id="mode">
-  </select>
-  <button id='render'>render</button>
-  <br/>
-  <canvas id='canvas' width='1200' height='800' style='width: 600px; height: 400px'></canvas>
-
-  <script src='lib/system.js'></script>
+<link rel='stylesheet' href='lib/bootstrap.min.css'>
+<style>
+#canvas {
+  width: 600px;
+  height: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px
+}
+#mode {
+  width: 200px;
+  display: inline-block;
+}
+#render {
+  margin-right: 20px;
+}
+p {
+  margin-top: 1rem;
+}
+.jumbotron {
+  padding: 2rem;
+}
+</style>
+<script src='lib/system.js'></script>
+<body class='container'>
+  <div class='jumbotron'>
+    <h1 class='display-3'>WebAssembly Mandelbrot Set</h1>
+    <p class='lead'>An exploration of various methods for creating WebAssembly modules using C, AssemblyScript, Emscripten, TypeScript and asm.js</p>
+    <p>see: <a href='https://github.com/ColinEberhardt/wasm-mandelbrot'>https://github.com/ColinEberhardt/wasm-mandelbrot</a></p>
+  </div>
+  <p class='lead'>Select an implementation, the click 'render'.</p>
+  <select id='mode' class='form-control'></select>
+  <button id='render' class='btn btn-primary'>Re-render</button>
+  <span>Render time</span> <span id='execution'>--</span> <span>ms</span>
+  <p id='description' class='lead'></p>
+  <canvas id='canvas' width='1200' height='800'></canvas>
   <script>
-  SystemJS.import('./app.js');
+    SystemJS.import('./app.js');
   </script>
 </body>

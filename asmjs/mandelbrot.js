@@ -20,5 +20,6 @@ module.exports = () => Promise.resolve({
     }
     ctx.putImageData(imgData, 0, 0);
   },
-  name: 'asm.js'
+  name: 'asm.js',
+  description: 'This implementation uses EmScripten to compile a C mandelbrot into asm.js'
 }); 

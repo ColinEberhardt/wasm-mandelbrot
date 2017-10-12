@@ -52,5 +52,6 @@ const javascriptMandelbrot = (ctx, config) => {
 
 module.exports = () => Promise.resolve({
   render: javascriptMandelbrot,
-  name: 'JavaScript'
+  name: 'JavaScript',
+  description: 'This a vanilla-JavaScript implementation of the Mandelbrot set.'
 });

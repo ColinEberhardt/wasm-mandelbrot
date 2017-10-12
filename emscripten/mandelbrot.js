@@ -34,6 +34,7 @@ module.exports = async() => {
       }
       ctx.putImageData(imgData, 0, 0);
     },
-    name: 'EmScripten'
+    name: 'Emscripten',
+    description: 'This implementation uses Emscripten to compile the C version of the mandelbrot to wasm. The SIDE_MODULE option is used to minimise teh amount of framework code added to the module.'
   };
 };

@@ -18,6 +18,7 @@ module.exports = async() => {
         imgData.data[i] = linearMemory[i];
       }
       ctx.putImageData(imgData, 0, 0);
-    }
+    },
+    description: 'This implementation creates a minimal wasm module by compiling C using clang / llc and the binaryen tools directly (as opposed to emscripten, that wraps up clang / llc together with its own framework code).'
   }
 };

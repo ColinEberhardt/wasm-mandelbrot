@@ -30,6 +30,9 @@ const wait = ms => new Promise((resolve) => setTimeout(resolve, ms));
 
 const bootstrap = async() => {
 
+  const modeSelect = document.getElementById('mode');
+  clearCanvas();
+
   const renderers = [
     await require('wasm/mandelbrot.js')(),
     await require('js/mandelbrot.js')(),
@@ -43,16 +46,25 @@ const bootstrap = async() => {
     const option = document.createElement('option');
     option.value = index;
     option.innerHTML = renderer.name;
-    document.getElementById('mode').appendChild(option);
+    modeSelect.appendChild(option);
   })
 
+  const render = async() => {
+    const renderer = renderers[modeSelect.value];
+    document.getElementById('description').innerHTML = renderer.description;
+    clearCanvas();
+    await wait(10);
+    const executionTime = timeExecution(() => renderer.render(ctx, config));
+    document.getElementById('execution').innerHTML = executionTime.toFixed(2);
+  }
+
   document.getElementById('render')
-    .addEventListener('click', async() => {
-      const renderer = renderers[document.getElementById('mode').value];
-      clearCanvas();
-      await wait(0);
-      console.log(timeExecution(() => renderer.render(ctx, config)));
-    });
+    .addEventListener('click', render);
+
+  modeSelect
+    .addEventListener('change', render);
+
+  render();
 }
 
 bootstrap();

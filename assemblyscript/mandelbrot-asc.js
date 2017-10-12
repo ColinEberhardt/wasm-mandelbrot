@@ -18,6 +18,7 @@ module.exports = async() => {
       }
       ctx.putImageData(imgData, 0, 0);
     },
-    name: 'AssemblyScript'
+    name: 'AssemblyScript',
+    description: 'This implementation uses the AssemblyScript compiler to compile a TypeScript mandelbrot to WebAssembly.'
   }
 };
