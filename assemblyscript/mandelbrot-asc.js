@@ -12,7 +12,7 @@ module.exports = async() => {
 
       const imgData = ctx.createImageData(WIDTH, HEIGHT);
       const offset = instance.instance.exports.getData();
-      const linearMemory = new Uint8Array(instance.instance.exports.memory.buffer, offset);
+      const linearMemory = new Uint8Array(instance.instance.exports.memory.buffer, offset, WIDTH * HEIGHT * 4);
       for (let i = 0; i < linearMemory.length; i++) {
         imgData.data[i] = linearMemory[i];
       }

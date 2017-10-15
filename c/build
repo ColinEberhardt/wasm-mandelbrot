@@ -1,2 +1,2 @@
 #!/bin/sh
-c2wasm mandelbrot.c
+clang mandelbrot.c -Ofast -o program

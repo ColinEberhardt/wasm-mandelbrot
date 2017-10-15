@@ -14,5 +14,5 @@ module.exports = () => Promise.resolve({
     ctx.putImageData(imgData, 0, 0);
   },
   name: 'TypeScript',
-  description: 'This implementation takes the TypeScript that is used to generate WebAssembly, but instead passes it through the TypeScript compiler to create JavaScript.'
+  description: 'This implementation takes the TypeScript that is used by AssemblyScript to generate WebAssembly, but instead passes it through the TypeScript compiler to create JavaScript.'
 });

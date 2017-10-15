@@ -26,7 +26,7 @@ int iterateEquation(double x0, double y0, int maxiterations) {
   return iterations;
 }
 
-double scale(double domainStart, double domainLength, int screenLength, double step) {
+double scale(double domainStart, double domainLength, double screenLength, double step) {
   return domainStart + domainLength * ((step - screenLength) / screenLength);
 }
 

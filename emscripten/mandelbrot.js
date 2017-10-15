@@ -28,13 +28,13 @@ module.exports = async() => {
 
       const imgData = ctx.createImageData(WIDTH, HEIGHT);
       const offset = instance.exports._getImage();
-      const linearMemory = new Uint8Array(imports.env.memory.buffer, offset);
+      const linearMemory = new Uint8Array(imports.env.memory.buffer, offset, WIDTH * HEIGHT * 4);
       for (let i = 0; i < linearMemory.length; i++) {
         imgData.data[i] = linearMemory[i];
       }
       ctx.putImageData(imgData, 0, 0);
     },
     name: 'Emscripten',
-    description: 'This implementation uses Emscripten to compile the C version of the mandelbrot to wasm. The SIDE_MODULE option is used to minimise teh amount of framework code added to the module.'
+    description: 'This implementation uses Emscripten to compile the C version of the mandelbrot to wasm. The SIDE_MODULE option is used to minimise the amount of framework code added to the module.'
   };
 };

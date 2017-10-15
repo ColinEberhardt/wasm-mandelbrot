@@ -47,10 +47,14 @@ const bootstrap = async() => {
     option.value = index;
     option.innerHTML = renderer.name;
     modeSelect.appendChild(option);
-  })
+  });
+
+  const selectedRenderer = window.location.hash ? window.location.hash.slice(1) : renderers[0].name;
+  modeSelect.selectedIndex = Array.apply(null, modeSelect.options).findIndex(o => o.text === selectedRenderer);
 
   const render = async() => {
     const renderer = renderers[modeSelect.value];
+    window.location.hash = '#' + renderer.name;
     document.getElementById('description').innerHTML = renderer.description;
     clearCanvas();
     await wait(10);

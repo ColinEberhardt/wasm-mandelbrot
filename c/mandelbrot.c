@@ -29,7 +29,7 @@ int iterateEquation(double x0, double y0, int maxiterations) {
   return iterations;
 }
 
-double scale(double domainStart, double domainLength, int screenLength, double step) {
+double scale(double domainStart, double domainLength, double screenLength, double step) {
   return domainStart + domainLength * ((step - screenLength) / screenLength);
 }
 
@@ -57,13 +57,12 @@ unsigned char* getImage() {
 
 
 int main() {
-  // printf() displays the string inside quotation
   clock_t start = clock() ;
-  for (int i=0; i<10; i++) {
+  for (int i = 0; i < 10; i++) {
     mandelbrot(10000, -0.7436447860, 0.1318252536, 0.00029336);
   }
   clock_t end = clock() ;
   double elapsed_time = (end-start)/(double)CLOCKS_PER_SEC ;
-  printf("%lf", elapsed_time / 10.0);
+  printf("%lf\n", elapsed_time / 10.0);
   return 0;
 }

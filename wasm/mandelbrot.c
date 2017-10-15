@@ -26,14 +26,14 @@ int iterateEquation(double x0, double y0, int maxiterations) {
   return iterations;
 }
 
-double scale(double domainStart, double domainLength, int screenLength, double step) {
-  return domainStart + domainLength * ((step - screenLength) / screenLength);
+double scale(double domainStart, double domainLength, int screenLength, int step) {
+  return domainStart + domainLength * ((double)(step - screenLength) / (double)screenLength);
 }
 
 void mandelbrot(int maxIterations, double cx, double cy, double diameter) {
   double verticalDiameter = diameter * HEIGHT / WIDTH;
-  for(double x = 0.0; x < WIDTH; x++) {
-    for(double y = 0.0; y < HEIGHT; y++) {
+  for(int x = 0.0; x < WIDTH; x++) {
+    for(int y = 0.0; y < HEIGHT; y++) {
       // map to mandelbrot coordinates
       double rx = scale(cx, diameter, WIDTH, x);
       double ry = scale(cy, verticalDiameter, HEIGHT, y);
