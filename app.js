@@ -52,21 +52,28 @@ const bootstrap = async() => {
   const selectedRenderer = window.location.hash ? window.location.hash.slice(1) : renderers[0].name;
   modeSelect.selectedIndex = Array.apply(null, modeSelect.options).findIndex(o => o.text === selectedRenderer);
 
-  const render = async() => {
+  const render = async(iterations = 1) => {
     const renderer = renderers[modeSelect.value];
     window.location.hash = '#' + renderer.name;
     document.getElementById('description').innerHTML = renderer.description;
     clearCanvas();
     await wait(10);
-    const executionTime = timeExecution(() => renderer.render(ctx, config));
-    document.getElementById('execution').innerHTML = executionTime.toFixed(2);
+    const executionTime = timeExecution(() => {
+      for (let i = 0; i < iterations; i++) {
+        renderer.render(ctx, config);
+      }
+    });
+    document.getElementById('execution').innerHTML = (executionTime / iterations).toFixed(2);
   }
 
   document.getElementById('render')
-    .addEventListener('click', render);
+    .addEventListener('click', () => render());
+
+  document.getElementById('renderPerf')
+    .addEventListener('click', () => render(10));
 
   modeSelect
-    .addEventListener('change', render);
+    .addEventListener('change', () => render());
 
   render();
 }

@@ -76,3 +76,6 @@ Module["asm"] = (function(global, env, buffer) {
   _mandelbrot: X
  };
 });
+
+
+

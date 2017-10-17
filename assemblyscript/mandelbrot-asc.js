@@ -6,8 +6,11 @@ module.exports = async() => {
   const buffer = await res.arrayBuffer();
   const instance = await WebAssembly.instantiate(buffer, {});
 
+  
+
   return {
     render: (ctx, config) => {
+      console.log(instance.instance.exports.structured());
       instance.instance.exports.mandelbrot(config.iterations, config.x, config.y, config.d);
 
       const imgData = ctx.createImageData(WIDTH, HEIGHT);

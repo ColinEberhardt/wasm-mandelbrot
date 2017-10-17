@@ -1,2 +1,2 @@
 #!/bin/sh
-emcc mandelbrot.c -O3 -s WASM=1 -s SIDE_MODULE=1 -o mandelbrot.wasm
+emcc mandelbrot.c -O1 -s WASM=1 -s SIDE_MODULE=1 -o mandelbrot.wasm
