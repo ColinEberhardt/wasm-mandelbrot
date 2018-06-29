@@ -37,10 +37,10 @@ define(["require", "exports", "allocator/arena"], function (require, exports) {
         for (let x = 0; x < WIDTH; ++x) {
             for (let y = 0; y < HEIGHT; ++y) {
                 // convert from screen coordinates to mandelbrot coordinates
-                let rx = scale(cx, diameter, invWidth, x);
+                let rx = scale(cx, diameter,         invWidth,  x);
                 let ry = scale(cy, verticalDiameter, invHeight, y);
                 let iterations = iterateEquation(rx, ry, maxIterations);
-                let idx = (x + y * WIDTH) >>> 2;
+                let idx = (x + y * WIDTH) << 2;
                 data[idx + 0] = iterations == maxIterations ? 0 : colour(iterations, 0, 4);
                 data[idx + 1] = iterations == maxIterations ? 0 : colour(iterations, 128, 4);
                 data[idx + 2] = iterations == maxIterations ? 0 : colour(iterations, 356, 4);

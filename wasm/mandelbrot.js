@@ -6,15 +6,19 @@ module.exports = async() => {
   const module = await WebAssembly.compile(buffer);
   const instance = new WebAssembly.Instance(module);
 
+  const { mandelbrot, getImage, memory } = instance.exports;
+
+  let imgData = null;
+
   return {
     name: 'WebAssembly',
-    render: (ctx, config) => {
-      instance.exports.mandelbrot(config.iterations, config.x, config.y, config.d)
+    render: (ctx, { iterations, x, y, d }) => {
+      mandelbrot(iterations, x, y, d);
 
-      const imgData = ctx.createImageData(WIDTH, HEIGHT);
-      const offset = instance.exports.getImage();
-      const linearMemory = new Uint8Array(instance.exports.memory.buffer, offset, WIDTH * HEIGHT * 4);
-      for (let i = 0; i < linearMemory.length; i++) {
+      if (!imgData) imgData = ctx.createImageData(WIDTH, HEIGHT);
+      const offset = getImage();
+      const linearMemory = new Uint8Array(memory.buffer, offset, WIDTH * HEIGHT * 4);
+      for (let i = 0, len = linearMemory.length; i < len; i++) {
         imgData.data[i] = linearMemory[i];
       }
       ctx.putImageData(imgData, 0, 0);

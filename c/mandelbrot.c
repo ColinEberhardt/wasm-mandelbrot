@@ -6,14 +6,13 @@ const int HEIGHT = 800;
 unsigned char image[WIDTH * HEIGHT * 4];
 
 unsigned char colour(int iteration, int offset, int scale) {
-  iteration = ((iteration * scale) + offset) % 1024;
+  iteration = (iteration * scale + offset) & 1023;
   if (iteration < 256) {
     return iteration;
   } else if (iteration < 512) {
-    return 255 - (iteration - 255);
-  } else {
-    return 0;
+    return 255 - ((iteration & 255) - 255);
   }
+  return 0;
 }
 
 int iterateEquation(double x0, double y0, int maxiterations) {
@@ -29,21 +28,23 @@ int iterateEquation(double x0, double y0, int maxiterations) {
   return iterations;
 }
 
-double scale(double domainStart, double domainLength, double screenLength, double step) {
-  return domainStart + domainLength * ((step - screenLength) / screenLength);
+inline double scale(double domainStart, double domainLength, double invScreenLength, double step) {
+  return domainStart + domainLength * ((step * invScreenLength - 1.0));
 }
 
 void mandelbrot(int maxIterations, double cx, double cy, double diameter) {
-  double verticalDiameter = diameter * HEIGHT / WIDTH;
-  for(double x = 0.0; x < WIDTH; x++) {
-    for(double y = 0.0; y < HEIGHT; y++) {
+  double invWidth  = 1.0 / (double)WIDTH;
+  double invHeight = 1.0 / (double)HEIGHT;
+  double verticalDiameter = diameter * HEIGHT * invWidth;
+  for (int x = 0; x < WIDTH; x++) {
+    for (int y = 0; y < HEIGHT; y++) {
       // map to mandelbrot coordinates
-      double rx = scale(cx, diameter, WIDTH, x);
-      double ry = scale(cy, verticalDiameter, HEIGHT, y);
+      double rx = scale(cx, diameter,         invWidth,  x);
+      double ry = scale(cy, verticalDiameter, invHeight, y);
       int iterations = iterateEquation(rx, ry, maxIterations);
-      int idx = ((x + y * WIDTH) * 4);
+      int idx = (x + y * WIDTH) << 2;
       // set the red and alpha components
-      image[idx] = iterations == maxIterations ? 0 : colour(iterations, 0, 4);
+      image[idx + 0] = iterations == maxIterations ? 0 : colour(iterations, 0,   4);
       image[idx + 1] = iterations == maxIterations ? 0 : colour(iterations, 128, 4);
       image[idx + 2] = iterations == maxIterations ? 0 : colour(iterations, 356, 4);
       image[idx + 3] = 255;

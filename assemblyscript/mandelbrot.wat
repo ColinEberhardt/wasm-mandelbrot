@@ -744,7 +744,7 @@
       (call $~lib/internal/typedarray/TypedArray<u8,u32>#__set
        (get_global $mandelbrot/data)
        (tee_local $7
-        (i32.shr_u
+        (i32.shl
          (i32.add
           (get_local $5)
           (i32.mul

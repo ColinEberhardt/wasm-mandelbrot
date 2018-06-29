@@ -43,7 +43,7 @@ export function mandelbrot(maxIterations: i32, cx: f64, cy: f64, diameter: f64):
       let rx = scale(cx, diameter,         invWidth,  x);
       let ry = scale(cy, verticalDiameter, invHeight, y);
       let iterations = iterateEquation(rx, ry, maxIterations);
-      let idx = (x + y * WIDTH) >>> 2;
+      let idx = (x + y * WIDTH) << 2;
       data[idx + 0] = iterations == maxIterations ? 0 : colour(iterations, 0,   4);
       data[idx + 1] = iterations == maxIterations ? 0 : colour(iterations, 128, 4);
       data[idx + 2] = iterations == maxIterations ? 0 : colour(iterations, 356, 4);
