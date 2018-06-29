@@ -10,7 +10,7 @@ define(["require", "exports", "allocator/arena"], function (require, exports) {
             return iteration;
         }
         else if (iteration < 512) {
-            return (255 - ((iteration & 255) - 255));
+            return (255 - (iteration - 255));
         }
         return 0;
     }
@@ -37,7 +37,7 @@ define(["require", "exports", "allocator/arena"], function (require, exports) {
         for (let x = 0; x < WIDTH; ++x) {
             for (let y = 0; y < HEIGHT; ++y) {
                 // convert from screen coordinates to mandelbrot coordinates
-                let rx = scale(cx, diameter,         invWidth,  x);
+                let rx = scale(cx, diameter, invWidth, x);
                 let ry = scale(cy, verticalDiameter, invHeight, y);
                 let iterations = iterateEquation(rx, ry, maxIterations);
                 let idx = (x + y * WIDTH) << 2;

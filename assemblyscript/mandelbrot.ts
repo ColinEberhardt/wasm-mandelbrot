@@ -10,7 +10,7 @@ function colour(iteration: i32, offset: i32, scale: i32): u8 {
   if (iteration < 256) {
     return <u8>iteration;
   } else if (iteration < 512) {
-    return <u8>(255 - ((iteration & 255) - 255));
+    return <u8>(255 - (iteration - 255));
   }
   return 0;
 }

@@ -623,10 +623,7 @@
     (return
      (i32.sub
       (i32.const 510)
-      (i32.and
-       (get_local $0)
-       (i32.const 255)
-      )
+      (get_local $0)
      )
     )
    )

@@ -7,7 +7,7 @@ unsigned char colour(int iteration, int offset, int scale) {
   if (iteration < 256) {
     return iteration;
   } else if (iteration < 512) {
-    return 255 - ((iteration & 255) - 255);
+    return 255 - (iteration - 255);
   }
   return 0;
 }
