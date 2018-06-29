@@ -1,7 +1,7 @@
 {
-  "extends": "./node_modules/assemblyscript/tsconfig.assembly.json",
+  "extends": "./node_modules/assemblyscript/std/assembly.json",
   "include": [
-    "./*.ts"
+    "./**/*.ts"
   ],
   "compilerOptions": {
     "module": "amd"
