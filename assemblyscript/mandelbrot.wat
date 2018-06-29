@@ -16,6 +16,7 @@
  (memory $0 1)
  (data (i32.const 8) "\1b\00\00\00~\00l\00i\00b\00/\00i\00n\00t\00e\00r\00n\00a\00l\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s")
  (export "mandelbrot" (func $mandelbrot/mandelbrot))
+ (export "getData" (func $mandelbrot/getData))
  (export "getDataBuffer" (func $mandelbrot/getDataBuffer))
  (export "memory" (memory $0))
  (start $start)
@@ -834,12 +835,15 @@
    )
   )
  )
- (func $mandelbrot/getDataBuffer (; 8 ;) (type $i) (result i32)
+ (func $mandelbrot/getData (; 8 ;) (type $i) (result i32)
+  (get_global $mandelbrot/data)
+ )
+ (func $mandelbrot/getDataBuffer (; 9 ;) (type $i) (result i32)
   (i32.load
    (get_global $mandelbrot/data)
   )
  )
- (func $start (; 9 ;) (type $v)
+ (func $start (; 10 ;) (type $v)
   (set_global $~lib/allocator/arena/startOffset
    (i32.and
     (i32.add

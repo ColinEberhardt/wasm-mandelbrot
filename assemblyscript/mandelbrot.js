@@ -26,6 +26,7 @@ define(["require", "exports", "allocator/arena"], function (require, exports) {
         }
         return iterations;
     }
+    // @inline
     function scale(domainStart, domainLength, invScreenLength, step) {
         return domainStart + domainLength * (step * invScreenLength - 1.0);
     }
@@ -48,6 +49,10 @@ define(["require", "exports", "allocator/arena"], function (require, exports) {
         }
     }
     exports.mandelbrot = mandelbrot;
+    function getData() {
+        return data;
+    }
+    exports.getData = getData;
     function getDataBuffer() {
         return (data.buffer);
     }

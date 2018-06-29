@@ -52,6 +52,10 @@ export function mandelbrot(maxIterations: i32, cx: f64, cy: f64, diameter: f64):
   }
 }
 
+export function getData(): Uint8Array {
+  return data;
+}
+
 export function getDataBuffer(): ArrayBuffer {
   return <ArrayBuffer>(data.buffer);
 };
