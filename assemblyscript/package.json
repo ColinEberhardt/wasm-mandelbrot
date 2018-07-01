@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-tsc": "npx tsc -t ES2017",
+    "build-tsc": "npx tsc",
     "build-asc": "npx asc mandelbrot.ts -b mandelbrot.wasm -t mandelbrot.wat -O3 --validate --noDebug --noAssert --use abort=",
     "build": "npm run build-asc && npm run build-tsc"
   },

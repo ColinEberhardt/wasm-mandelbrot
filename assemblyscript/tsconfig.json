@@ -4,6 +4,7 @@
     "./**/*.ts"
   ],
   "compilerOptions": {
+    "target": "es6",
     "module": "amd"
   }
 }
