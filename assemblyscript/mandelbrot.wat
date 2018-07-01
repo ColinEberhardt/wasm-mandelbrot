@@ -630,52 +630,18 @@
   )
   (i32.const 0)
  )
- (func $~lib/internal/typedarray/TypedArray<u8,u32>#__set (; 6 ;) (type $iiiv) (param $0 i32) (param $1 i32) (param $2 i32)
-  (local $3 i32)
-  (if
-   (i32.ge_u
-    (get_local $1)
-    (i32.sub
-     (i32.load offset=8
-      (get_local $0)
-     )
-     (tee_local $3
-      (i32.load offset=4
-       (get_local $0)
-      )
-     )
-    )
-   )
-   (block
-    (call $~lib/env/abort
-     (i32.const 0)
-     (i32.const 8)
-     (i32.const 48)
-     (i32.const 42)
-    )
-    (unreachable)
-   )
-  )
-  (i32.store8 offset=8
-   (i32.add
-    (i32.add
-     (i32.load
-      (get_local $0)
-     )
-     (get_local $3)
-    )
-    (get_local $1)
-   )
-   (get_local $2)
-  )
- )
- (func $mandelbrot/mandelbrot (; 7 ;) (type $iFFFv) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
+ (func $mandelbrot/mandelbrot (; 6 ;) (type $iFFFv) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
   (local $7 i32)
-  (local $8 f64)
-  (set_local $8
+  (local $8 i32)
+  (local $9 i32)
+  (local $10 i32)
+  (local $11 i32)
+  (local $12 i32)
+  (local $13 f64)
+  (set_local $13
    (f64.mul
     (f64.mul
      (get_local $3)
@@ -688,22 +654,22 @@
    (loop $repeat|0
     (br_if $break|0
      (i32.ge_s
-      (get_local $5)
+      (get_local $10)
       (i32.const 1200)
      )
     )
     (block $break|1
-     (set_local $6
+     (set_local $8
       (i32.const 0)
      )
      (loop $repeat|1
       (br_if $break|1
        (i32.ge_s
-        (get_local $6)
+        (get_local $8)
         (i32.const 800)
        )
       )
-      (set_local $4
+      (set_local $5
        (call $mandelbrot/iterateEquation
         (f64.add
          (get_local $1)
@@ -712,7 +678,7 @@
           (f64.sub
            (f64.mul
             (f64.convert_s/i32
-             (get_local $5)
+             (get_local $10)
             )
             (f64.const 8.333333333333334e-04)
            )
@@ -723,11 +689,11 @@
         (f64.add
          (get_local $2)
          (f64.mul
-          (get_local $8)
+          (get_local $13)
           (f64.sub
            (f64.mul
             (f64.convert_s/i32
-             (get_local $6)
+             (get_local $8)
             )
             (f64.const 0.00125)
            )
@@ -738,93 +704,230 @@
         (get_local $0)
        )
       )
-      (call $~lib/internal/typedarray/TypedArray<u8,u32>#__set
-       (get_global $mandelbrot/data)
+      (set_local $6
+       (tee_local $4
+        (get_global $mandelbrot/data)
+       )
+      )
+      (set_local $12
        (tee_local $7
-        (i32.shl
-         (i32.add
-          (get_local $5)
-          (i32.mul
-           (get_local $6)
-           (i32.const 1200)
+        (tee_local $11
+         (i32.shl
+          (i32.add
+           (get_local $10)
+           (i32.mul
+            (get_local $8)
+            (i32.const 1200)
+           )
           )
+          (i32.const 2)
          )
-         (i32.const 2)
         )
        )
+      )
+      (set_local $9
        (if (result i32)
         (i32.eq
-         (get_local $4)
+         (get_local $5)
          (get_local $0)
         )
         (i32.const 0)
         (call $mandelbrot/colour
-         (get_local $4)
+         (get_local $5)
          (i32.const 0)
          (i32.const 4)
         )
        )
       )
-      (call $~lib/internal/typedarray/TypedArray<u8,u32>#__set
-       (get_global $mandelbrot/data)
+      (i32.store8 offset=8
        (i32.add
-        (get_local $7)
-        (i32.const 1)
+        (i32.add
+         (i32.load
+          (get_local $6)
+         )
+         (i32.load offset=4
+          (get_local $6)
+         )
+        )
+        (get_local $12)
        )
+       (get_local $9)
+      )
+      (drop
+       (i32.load8_u offset=8
+        (i32.add
+         (i32.add
+          (i32.load
+           (get_local $4)
+          )
+          (i32.load offset=4
+           (get_local $4)
+          )
+         )
+         (get_local $7)
+        )
+       )
+      )
+      (set_local $6
+       (tee_local $4
+        (get_global $mandelbrot/data)
+       )
+      )
+      (set_local $12
+       (tee_local $7
+        (i32.add
+         (get_local $11)
+         (i32.const 1)
+        )
+       )
+      )
+      (set_local $9
        (if (result i32)
         (i32.eq
-         (get_local $4)
+         (get_local $5)
          (get_local $0)
         )
         (i32.const 0)
         (call $mandelbrot/colour
-         (get_local $4)
+         (get_local $5)
          (i32.const 128)
          (i32.const 4)
         )
        )
       )
-      (call $~lib/internal/typedarray/TypedArray<u8,u32>#__set
-       (get_global $mandelbrot/data)
+      (i32.store8 offset=8
        (i32.add
-        (get_local $7)
-        (i32.const 2)
+        (i32.add
+         (i32.load
+          (get_local $6)
+         )
+         (i32.load offset=4
+          (get_local $6)
+         )
+        )
+        (get_local $12)
        )
-       (tee_local $4
-        (if (result i32)
-         (i32.eq
-          (get_local $4)
-          (get_local $0)
+       (get_local $9)
+      )
+      (drop
+       (i32.load8_u offset=8
+        (i32.add
+         (i32.add
+          (i32.load
+           (get_local $4)
+          )
+          (i32.load offset=4
+           (get_local $4)
+          )
          )
-         (i32.const 0)
-         (call $mandelbrot/colour
-          (get_local $4)
-          (i32.const 356)
-          (i32.const 4)
-         )
+         (get_local $7)
         )
        )
       )
-      (call $~lib/internal/typedarray/TypedArray<u8,u32>#__set
-       (get_global $mandelbrot/data)
+      (set_local $6
+       (tee_local $4
+        (get_global $mandelbrot/data)
+       )
+      )
+      (set_local $9
+       (tee_local $7
+        (i32.add
+         (get_local $11)
+         (i32.const 2)
+        )
+       )
+      )
+      (set_local $5
+       (if (result i32)
+        (i32.eq
+         (get_local $5)
+         (get_local $0)
+        )
+        (i32.const 0)
+        (call $mandelbrot/colour
+         (get_local $5)
+         (i32.const 356)
+         (i32.const 4)
+        )
+       )
+      )
+      (i32.store8 offset=8
        (i32.add
-        (get_local $7)
-        (i32.const 3)
+        (i32.add
+         (i32.load
+          (get_local $6)
+         )
+         (i32.load offset=4
+          (get_local $6)
+         )
+        )
+        (get_local $9)
+       )
+       (get_local $5)
+      )
+      (drop
+       (i32.load8_u offset=8
+        (i32.add
+         (i32.add
+          (i32.load
+           (get_local $4)
+          )
+          (i32.load offset=4
+           (get_local $4)
+          )
+         )
+         (get_local $7)
+        )
+       )
+      )
+      (i32.store8 offset=8
+       (i32.add
+        (i32.add
+         (i32.load
+          (tee_local $4
+           (get_global $mandelbrot/data)
+          )
+         )
+         (i32.load offset=4
+          (get_local $4)
+         )
+        )
+        (tee_local $7
+         (i32.add
+          (get_local $11)
+          (i32.const 3)
+         )
+        )
        )
        (i32.const 255)
       )
-      (set_local $6
+      (drop
+       (i32.load8_u offset=8
+        (i32.add
+         (i32.add
+          (i32.load
+           (get_local $4)
+          )
+          (i32.load offset=4
+           (get_local $4)
+          )
+         )
+         (get_local $7)
+        )
+       )
+      )
+      (set_local $8
        (i32.add
-        (get_local $6)
+        (get_local $8)
         (i32.const 1)
        )
       )
       (br $repeat|1)
      )
     )
-    (set_local $5
+    (set_local $10
      (i32.add
-      (get_local $5)
+      (get_local $10)
       (i32.const 1)
      )
     )
@@ -832,15 +935,15 @@
    )
   )
  )
- (func $mandelbrot/getData (; 8 ;) (type $i) (result i32)
+ (func $mandelbrot/getData (; 7 ;) (type $i) (result i32)
   (get_global $mandelbrot/data)
  )
- (func $mandelbrot/getDataBuffer (; 9 ;) (type $i) (result i32)
+ (func $mandelbrot/getDataBuffer (; 8 ;) (type $i) (result i32)
   (i32.load
    (get_global $mandelbrot/data)
   )
  )
- (func $start (; 10 ;) (type $v)
+ (func $start (; 9 ;) (type $v)
   (set_global $~lib/allocator/arena/startOffset
    (i32.and
     (i32.add
