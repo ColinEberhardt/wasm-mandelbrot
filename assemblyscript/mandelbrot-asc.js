@@ -1,11 +1,22 @@
 module.exports = async () => {
 
-  const WIDTH  = 1200;
-  const HEIGHT = 800;
+  const WIDTH     = 1200;
+  const HEIGHT    = 800;
+  const PAGE_SIZE = 65536;
+
+  function allocateMemory() {
+    const initial = Math.floor(WIDTH * HEIGHT * 4 / PAGE_SIZE) + 1;
+    return new WebAssembly.Memory({ initial });
+  }
+
+  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), {
+    env: {
+      memoryBase: 0,
+      memory: allocateMemory()
+    }
+  });
 
   let imgData = null;
-
-  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), {});
   const { mandelbrot, getDataBuffer, memory } = result.instance.exports;
 
   return {

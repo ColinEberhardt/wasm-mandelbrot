@@ -1,19 +1,19 @@
 module.exports = async () => {
 
-  const WIDTH  = 1200;
-  const HEIGHT = 800;
+  const WIDTH     = 1200;
+  const HEIGHT    = 800;
+  const PAGE_SIZE = 65536;
 
-  const res    = await fetch('emscripten/mandelbrot.wasm');
-  const buffer = await res.arrayBuffer();
-  const module = await WebAssembly.compile(buffer);
+  function allocateMemory() {
+    const initial = Math.floor(WIDTH * HEIGHT * 4 / PAGE_SIZE) + 1;
+    return new WebAssembly.Memory({ initial });
+  }
 
   const imports = {
     env: {
       memoryBase: 0,
       tableBase: 0,
-      memory: new WebAssembly.Memory({
-        initial: 512
-      }),
+      memory: allocateMemory(),
       table: new WebAssembly.Table({
         initial: 0,
         element: 'anyfunc'
@@ -21,9 +21,12 @@ module.exports = async () => {
     }
   };
 
+  const res      = await fetch('emscripten/mandelbrot.wasm');
+  const buffer   = await res.arrayBuffer();
+  const module   = await WebAssembly.compile(buffer);
   const instance = new WebAssembly.Instance(module, imports);
-  const { _mandelbrot, _getImage } = instance.exports;
 
+  const { _mandelbrot, _getImage } = instance.exports;
   let imgData = null;
 
   return {

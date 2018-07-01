@@ -1,10 +1,24 @@
-module.exports = async() => {
-  const WIDTH = 1200, HEIGHT = 800;
+module.exports = async () => {
+  const WIDTH     = 1200;
+  const HEIGHT    = 800;
+  const PAGE_SIZE = 65536;
 
-  const res = await fetch('wasm/mandelbrot.wasm');
-  const buffer = await res.arrayBuffer();
-  const module = await WebAssembly.compile(buffer);
-  const instance = new WebAssembly.Instance(module);
+  function allocateMemory() {
+    const initial = Math.floor(WIDTH * HEIGHT * 4 / PAGE_SIZE) + 1;
+    return new WebAssembly.Memory({ initial });
+  }
+
+  const imports = {
+    env: {
+      memoryBase: 0,
+      memory: allocateMemory(),
+    }
+  };
+
+  const res      = await fetch('wasm/mandelbrot.wasm');
+  const buffer   = await res.arrayBuffer();
+  const module   = await WebAssembly.compile(buffer);
+  const instance = new WebAssembly.Instance(module, imports);
 
   const { mandelbrot, getImage, memory } = instance.exports;
 
