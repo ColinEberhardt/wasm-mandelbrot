@@ -1,6 +1,5 @@
 (module
  (type $iii (func (param i32 i32) (result i32)))
- (type $iiiiv (func (param i32 i32 i32 i32)))
  (type $ii (func (param i32) (result i32)))
  (type $iiiv (func (param i32 i32 i32)))
  (type $iFFFv (func (param i32 f64 f64 f64)))
@@ -8,19 +7,17 @@
  (type $iiii (func (param i32 i32 i32) (result i32)))
  (type $i (func (result i32)))
  (type $v (func))
- (import "env" "abort" (func $~lib/env/abort (param i32 i32 i32 i32)))
  (global $~lib/allocator/arena/startOffset (mut i32) (i32.const 0))
  (global $~lib/allocator/arena/offset (mut i32) (i32.const 0))
  (global $mandelbrot/data (mut i32) (i32.const 0))
- (global $HEAP_BASE i32 (i32.const 68))
- (memory $0 1)
- (data (i32.const 8) "\1b\00\00\00~\00l\00i\00b\00/\00i\00n\00t\00e\00r\00n\00a\00l\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s")
+ (global $HEAP_BASE i32 (i32.const 8))
+ (memory $0 0)
  (export "mandelbrot" (func $mandelbrot/mandelbrot))
  (export "getData" (func $mandelbrot/getData))
  (export "getDataBuffer" (func $mandelbrot/getDataBuffer))
  (export "memory" (memory $0))
  (start $start)
- (func $~lib/allocator/arena/allocate_memory (; 1 ;) (type $ii) (param $0 i32) (result i32)
+ (func $~lib/allocator/arena/allocate_memory (; 0 ;) (type $ii) (param $0 i32) (result i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
@@ -106,7 +103,7 @@
   )
   (i32.const 0)
  )
- (func $~lib/memory/set_memory (; 2 ;) (type $iiiv) (param $0 i32) (param $1 i32) (param $2 i32)
+ (func $~lib/memory/set_memory (; 1 ;) (type $iiiv) (param $0 i32) (param $1 i32) (param $2 i32)
   (local $3 i32)
   (local $4 i64)
   (if
@@ -436,22 +433,14 @@
    )
   )
  )
- (func $~lib/internal/typedarray/TypedArray<u8,u32>#constructor (; 3 ;) (type $iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/internal/typedarray/TypedArray<u8,u32>#constructor (; 2 ;) (type $iii) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (if
    (i32.gt_u
     (get_local $1)
     (i32.const 1073741816)
    )
-   (block
-    (call $~lib/env/abort
-     (i32.const 0)
-     (i32.const 8)
-     (i32.const 18)
-     (i32.const 34)
-    )
-    (unreachable)
-   )
+   (unreachable)
   )
   (i32.store
    (tee_local $2
@@ -517,7 +506,7 @@
   )
   (get_local $0)
  )
- (func $mandelbrot/iterateEquation (; 4 ;) (type $FFii) (param $0 f64) (param $1 f64) (param $2 i32) (result i32)
+ (func $mandelbrot/iterateEquation (; 3 ;) (type $FFii) (param $0 f64) (param $1 f64) (param $2 i32) (result i32)
   (local $3 f64)
   (local $4 f64)
   (local $5 f64)
@@ -595,7 +584,7 @@
   )
   (get_local $6)
  )
- (func $mandelbrot/colour (; 5 ;) (type $iiii) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+ (func $mandelbrot/colour (; 4 ;) (type $iiii) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
   (if
    (i32.lt_s
     (tee_local $0
@@ -630,7 +619,7 @@
   )
   (i32.const 0)
  )
- (func $mandelbrot/mandelbrot (; 6 ;) (type $iFFFv) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
+ (func $mandelbrot/mandelbrot (; 5 ;) (type $iFFFv) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
@@ -935,15 +924,15 @@
    )
   )
  )
- (func $mandelbrot/getData (; 7 ;) (type $i) (result i32)
+ (func $mandelbrot/getData (; 6 ;) (type $i) (result i32)
   (get_global $mandelbrot/data)
  )
- (func $mandelbrot/getDataBuffer (; 8 ;) (type $i) (result i32)
+ (func $mandelbrot/getDataBuffer (; 7 ;) (type $i) (result i32)
   (i32.load
    (get_global $mandelbrot/data)
   )
  )
- (func $start (; 9 ;) (type $v)
+ (func $start (; 8 ;) (type $v)
   (set_global $~lib/allocator/arena/startOffset
    (i32.and
     (i32.add

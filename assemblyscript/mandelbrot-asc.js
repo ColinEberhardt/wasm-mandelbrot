@@ -5,12 +5,7 @@ module.exports = async () => {
 
   let imgData = null;
 
-  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), {
-    abort: (msg, file, line, column) => {
-      console.error("abort called at mandelbrot.ts:" + line + ":" + column);
-    }
-  });
-
+  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), {});
   const { mandelbrot, getDataBuffer, memory } = result.instance.exports;
 
   return {
