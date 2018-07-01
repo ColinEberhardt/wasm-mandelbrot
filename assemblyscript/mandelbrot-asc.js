@@ -9,15 +9,16 @@ module.exports = async () => {
     return new WebAssembly.Memory({ initial });
   }
 
-  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), {
+  const imports = {
     env: {
       memoryBase: 0,
       memory: allocateMemory()
     }
-  });
+  };
 
-  let imgData = null;
+  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), imports);
   const { mandelbrot, getDataBuffer, memory } = result.instance.exports;
+  let imgData = null;
 
   return {
     render: (ctx, { iterations, x, y, d }) => {
