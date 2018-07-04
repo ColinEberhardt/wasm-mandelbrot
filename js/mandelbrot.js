@@ -25,7 +25,7 @@ function iterateEquation(x0, y0, maxiterations) {
 }
 
 function scale(domainStart, domainLength, invScreenLength, step) {
-  domainStart + domainLength * (step * invScreenLength - 1);
+  return domainStart + domainLength * (step * invScreenLength - 1);
 }
 
 function mandelbrot(data, maxIterations, cx, cy, diameter) {
@@ -47,9 +47,9 @@ function mandelbrot(data, maxIterations, cx, cy, diameter) {
   }
 }
 
-const javascriptMandelbrot = (ctx, config) => {
+function javascriptMandelbrot(ctx, config) {
   const imgData = ctx.createImageData(WIDTH, HEIGHT);
-  mandelbrot(imgData.data, config.iterations, config.x, config.y, config.d)
+  mandelbrot(imgData.data, config.iterations, config.x, config.y, config.d);
   ctx.putImageData(imgData, 0, 0);
 }
 
