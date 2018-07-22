@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "assemblyscript": "github:AssemblyScript/assemblyscript",
+    "glob": "^7.1.2",
     "typescript": "^2.9.2"
   }
 }

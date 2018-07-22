@@ -16,8 +16,10 @@ module.exports = async () => {
     }
   };
 
-  const result = await WebAssembly.instantiateStreaming(fetch('assemblyscript/mandelbrot.wasm'), imports);
-  const { mandelbrot, getDataBuffer, memory } = result.instance.exports;
+  const res = await fetch('assemblyscript/mandelbrot.wasm');
+  const buffer = await res.arrayBuffer();
+  const module = await WebAssembly.instantiate(buffer, imports);
+  const { mandelbrot, getDataBuffer, memory } = module.instance.exports;
   let imgData = null;
 
   return {
