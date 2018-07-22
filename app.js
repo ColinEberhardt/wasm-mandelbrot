@@ -38,7 +38,7 @@ const bootstrap = async() => {
     await require('js/mandelbrot.js')(),
     await require('emscripten/mandelbrot.js')(),
     await require('assemblyscript/mandelbrot-asc.js')(),
-    await require('assemblyscript/mandelbrot-tsc.js')(),
+    // await require('assemblyscript/mandelbrot-tsc.js')(),
     await require('asmjs/mandelbrot.js')(),
   ];
 

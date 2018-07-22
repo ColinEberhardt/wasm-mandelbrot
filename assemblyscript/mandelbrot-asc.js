@@ -1,27 +1,40 @@
-module.exports = async() => {
+module.exports = async () => {
 
-  const WIDTH = 1200, HEIGHT = 800;
+  const WIDTH     = 1200;
+  const HEIGHT    = 800;
+  const PAGE_SIZE = 65536;
+
+  function allocateMemory() {
+    const initial = Math.floor(WIDTH * HEIGHT * 4 / PAGE_SIZE) + 1;
+    return new WebAssembly.Memory({ initial });
+  }
+
+  const imports = {
+    env: {
+      memoryBase: 0,
+      memory: allocateMemory()
+    }
+  };
 
   const res = await fetch('assemblyscript/mandelbrot.wasm');
   const buffer = await res.arrayBuffer();
-  const instance = await WebAssembly.instantiate(buffer, {});
-
-  
+  const module = await WebAssembly.instantiate(buffer, imports);
+  const { mandelbrot, getDataBuffer, memory } = module.instance.exports;
+  let imgData = null;
 
   return {
-    render: (ctx, config) => {
-      console.log(instance.instance.exports.structured());
-      instance.instance.exports.mandelbrot(config.iterations, config.x, config.y, config.d);
+    render: (ctx, { iterations, x, y, d }) => {
+      mandelbrot(iterations, x, y, d);
 
-      const imgData = ctx.createImageData(WIDTH, HEIGHT);
-      const offset = instance.instance.exports.getData();
-      const linearMemory = new Uint8Array(instance.instance.exports.memory.buffer, offset, WIDTH * HEIGHT * 4);
-      for (let i = 0; i < linearMemory.length; i++) {
+      if (!imgData) imgData = ctx.createImageData(WIDTH, HEIGHT);
+      const offset = getDataBuffer();
+      const linearMemory = new Uint8Array(memory.buffer, offset, WIDTH * HEIGHT * 4);
+      for (let i = 0, len = linearMemory.length; i < len; i++) {
         imgData.data[i] = linearMemory[i];
       }
       ctx.putImageData(imgData, 0, 0);
     },
     name: 'AssemblyScript',
     description: 'This implementation uses the AssemblyScript compiler to compile a TypeScript mandelbrot to WebAssembly.'
-  }
+  };
 };
