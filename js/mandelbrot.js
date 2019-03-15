@@ -29,17 +29,18 @@ const scale = (domainStart, domainLength, screenLength, step) =>
 
 const mandelbrot = (data, maxIterations, cx, cy, diameter) => {
   const verticalDiameter = diameter * HEIGHT / WIDTH;
-  for (var x = 0; x < WIDTH; x++) {
-    for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
       // convert from screen coordinates to mandelbrot coordinates
       const rx = scale(cx, diameter, WIDTH, x);
       const ry = scale(cy, verticalDiameter, HEIGHT, y);
       const iterations = iterateEquation(rx, ry, maxIterations);
-      const idx = (x + y * WIDTH) * 4;
-      data[idx] = iterations === maxIterations ? 0 : colour(iterations, 0, 4);
-      data[idx + 1] = iterations === maxIterations ? 0 : colour(iterations, 128, 4);
-      data[idx + 2] = iterations === maxIterations ? 0 : colour(iterations, 356, 4);
-      data[idx+3] = 255;
+      const idx = (x + y * WIDTH) << 2;
+      const outside = iterations === maxIterations;
+      data[idx + 0] = outside ? 0 : colour(iterations, 0,   4);
+      data[idx + 1] = outside ? 0 : colour(iterations, 128, 4);
+      data[idx + 2] = outside ? 0 : colour(iterations, 356, 4);
+      data[idx + 3] = 255;
     }
   }
 }
