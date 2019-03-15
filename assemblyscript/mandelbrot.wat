@@ -5,8 +5,9 @@
  (type $FUNCSIG$iddi (func (param f64 f64 i32) (result i32)))
  (type $FUNCSIG$i (func (result i32)))
  (type $FUNCSIG$vi (func (param i32)))
- (type $FUNCSIG$iii (func (param i32 i32) (result i32)))
- (memory $0 0)
+ (import "env" "memory" (memory $0 1))
+ (data (i32.const 8) "\1b\00\00\00~\00l\00i\00b\00/\00i\00n\00t\00e\00r\00n\00a\00l\00/\00t\00y\00p\00e\00d\00a\00r\00r\00a\00y\00.\00t\00s")
+ (data (i32.const 72) "\1c\00\00\00~\00l\00i\00b\00/\00i\00n\00t\00e\00r\00n\00a\00l\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
  (table $0 1 funcref)
  (elem (i32.const 0) $null)
  (global $~lib/allocator/arena/startOffset (mut i32) (i32.const 0))
@@ -327,8 +328,8 @@
     local.get $7
     local.get $7
     f64.mul
-    local.get $5
-    local.get $5
+    local.get $3
+    local.get $3
     f64.mul
     f64.add
     f64.const 4
@@ -337,27 +338,28 @@
    end
    local.get $8
    if
-    f64.const 2
-    local.get $3
-    f64.mul
     local.get $4
+    local.get $5
     f64.mul
-    local.get $1
-    f64.add
-    local.set $5
-    local.get $3
-    local.get $3
-    f64.mul
+    local.set $3
     local.get $4
     local.get $4
+    f64.mul
+    local.get $5
+    local.get $5
     f64.mul
     f64.sub
     local.get $0
     f64.add
     local.tee $7
-    local.set $3
-    local.get $5
     local.set $4
+    local.get $3
+    local.get $3
+    f64.add
+    local.get $1
+    f64.add
+    local.tee $3
+    local.set $5
     local.get $6
     i32.const 1
     i32.add
@@ -367,34 +369,7 @@
   end
   local.get $6
  )
- (func $mandelbrot/colour (; 4 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
-  local.get $0
-  i32.const 2
-  i32.shl
-  local.get $1
-  i32.add
-  i32.const 1023
-  i32.and
-  local.tee $0
-  i32.const 256
-  i32.lt_u
-  if
-   local.get $0
-   return
-  else   
-   local.get $0
-   i32.const 512
-   i32.lt_u
-   if
-    i32.const 510
-    local.get $0
-    i32.sub
-    return
-   end
-  end
-  i32.const 0
- )
- (func $mandelbrot/mandelbrot (; 5 ;) (type $FUNCSIG$viddd) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
+ (func $mandelbrot/mandelbrot (; 4 ;) (type $FUNCSIG$viddd) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
@@ -404,36 +379,28 @@
   (local $10 i32)
   (local $11 i32)
   (local $12 i32)
-  (local $13 i32)
-  (local $14 f64)
-  (local $15 i32)
+  (local $13 f64)
   local.get $3
   f64.const 800
   f64.mul
   f64.const 1200
   f64.div
-  local.set $14
+  local.set $13
   loop $repeat|0
-   local.get $10
+   local.get $9
    i32.const 800
    i32.lt_s
    if
-    local.get $10
-    i32.const 1200
-    i32.mul
-    i32.const 2
-    i32.shl
-    local.set $15
     i32.const 0
-    local.set $8
+    local.set $7
     loop $repeat|1
-     local.get $8
+     local.get $7
      i32.const 1200
      i32.lt_s
      if
       local.get $1
       local.get $3
-      local.get $8
+      local.get $7
       f64.convert_i32_s
       f64.const 1200
       f64.sub
@@ -442,8 +409,8 @@
       f64.mul
       f64.add
       local.get $2
-      local.get $14
-      local.get $10
+      local.get $13
+      local.get $9
       f64.convert_i32_s
       f64.const 800
       f64.sub
@@ -453,38 +420,62 @@
       f64.add
       local.get $0
       call $mandelbrot/iterateEquation
-      local.set $7
+      local.set $10
       global.get $mandelbrot/data
       local.tee $4
-      local.set $5
-      local.get $8
+      local.tee $8
+      i32.load offset=4
+      local.get $9
+      i32.const 1200
+      i32.mul
+      local.get $7
+      i32.add
       i32.const 2
       i32.shl
-      local.get $15
-      i32.add
       local.tee $11
       local.tee $6
-      local.set $12
+      local.get $8
+      i32.load
+      i32.add
+      i32.add
       local.get $0
-      local.get $7
+      local.get $10
       i32.eq
-      local.tee $13
+      local.tee $12
       if (result i32)
        i32.const 0
       else       
-       local.get $7
        i32.const 0
-       call $mandelbrot/colour
+       local.set $6
+       i32.const 4
+       local.set $4
+       block $mandelbrot/colour|inlined.0
+        local.get $10
+        i32.const 2
+        i32.shl
+        i32.const 1023
+        i32.and
+        local.tee $5
+        i32.const 256
+        i32.lt_u
+        br_if $mandelbrot/colour|inlined.0
+        local.get $5
+        i32.const 512
+        i32.lt_u
+        if
+         i32.const 510
+         local.get $5
+         i32.sub
+         local.set $5
+         br $mandelbrot/colour|inlined.0
+        end
+        i32.const 0
+        local.set $5
+       end
+       local.get $5
+       i32.const 255
+       i32.and
       end
-      local.set $9
-      local.get $5
-      i32.load offset=4
-      local.get $5
-      i32.load
-      local.get $12
-      i32.add
-      i32.add
-      local.get $9
       i32.store8 offset=8
       local.get $4
       i32.load offset=4
@@ -496,34 +487,58 @@
       i32.load8_u offset=8
       drop
       global.get $mandelbrot/data
-      local.tee $4
-      local.set $5
+      local.tee $5
+      local.tee $8
+      i32.load offset=4
       local.get $11
       i32.const 1
       i32.add
       local.tee $6
-      local.set $12
-      local.get $13
+      local.get $8
+      i32.load
+      i32.add
+      i32.add
+      local.get $12
       if (result i32)
        i32.const 0
       else       
-       local.get $7
        i32.const 128
-       call $mandelbrot/colour
+       local.set $6
+       i32.const 4
+       local.set $5
+       block $mandelbrot/colour|inlined.1
+        local.get $10
+        i32.const 2
+        i32.shl
+        i32.const 128
+        i32.add
+        i32.const 1023
+        i32.and
+        local.tee $4
+        i32.const 256
+        i32.lt_u
+        br_if $mandelbrot/colour|inlined.1
+        local.get $4
+        i32.const 512
+        i32.lt_u
+        if
+         i32.const 510
+         local.get $4
+         i32.sub
+         local.set $4
+         br $mandelbrot/colour|inlined.1
+        end
+        i32.const 0
+        local.set $4
+       end
+       local.get $4
+       i32.const 255
+       i32.and
       end
-      local.set $9
-      local.get $5
-      i32.load offset=4
-      local.get $5
-      i32.load
-      local.get $12
-      i32.add
-      i32.add
-      local.get $9
       i32.store8 offset=8
-      local.get $4
+      local.get $5
       i32.load offset=4
-      local.get $4
+      local.get $5
       i32.load
       local.get $6
       i32.add
@@ -532,29 +547,53 @@
       drop
       global.get $mandelbrot/data
       local.tee $4
-      local.set $5
+      local.tee $8
+      i32.load offset=4
       local.get $11
       i32.const 2
       i32.add
       local.tee $6
-      local.set $9
-      local.get $13
+      local.get $8
+      i32.load
+      i32.add
+      i32.add
+      local.get $12
       if (result i32)
        i32.const 0
       else       
-       local.get $7
        i32.const 356
-       call $mandelbrot/colour
+       local.set $6
+       i32.const 4
+       local.set $4
+       block $mandelbrot/colour|inlined.2
+        local.get $10
+        i32.const 2
+        i32.shl
+        i32.const 356
+        i32.add
+        i32.const 1023
+        i32.and
+        local.tee $5
+        i32.const 256
+        i32.lt_u
+        br_if $mandelbrot/colour|inlined.2
+        local.get $5
+        i32.const 512
+        i32.lt_u
+        if
+         i32.const 510
+         local.get $5
+         i32.sub
+         local.set $5
+         br $mandelbrot/colour|inlined.2
+        end
+        i32.const 0
+        local.set $5
+       end
+       local.get $5
+       i32.const 255
+       i32.and
       end
-      local.set $7
-      local.get $5
-      i32.load offset=4
-      local.get $5
-      i32.load
-      local.get $9
-      i32.add
-      i32.add
-      local.get $7
       i32.store8 offset=8
       local.get $4
       i32.load offset=4
@@ -587,30 +626,30 @@
       i32.add
       i32.load8_u offset=8
       drop
-      local.get $8
+      local.get $7
       i32.const 1
       i32.add
-      local.set $8
+      local.set $7
       br $repeat|1
      end
     end
-    local.get $10
+    local.get $9
     i32.const 1
     i32.add
-    local.set $10
+    local.set $9
     br $repeat|0
    end
   end
  )
- (func $mandelbrot/getData (; 6 ;) (type $FUNCSIG$i) (result i32)
+ (func $mandelbrot/getData (; 5 ;) (type $FUNCSIG$i) (result i32)
   global.get $mandelbrot/data
  )
- (func $mandelbrot/getDataBuffer (; 7 ;) (type $FUNCSIG$i) (result i32)
+ (func $mandelbrot/getDataBuffer (; 6 ;) (type $FUNCSIG$i) (result i32)
   global.get $mandelbrot/data
   i32.load
  )
- (func $start (; 8 ;) (type $FUNCSIG$v)
-  i32.const 8
+ (func $start (; 7 ;) (type $FUNCSIG$v)
+  i32.const 136
   global.set $~lib/allocator/arena/startOffset
   global.get $~lib/allocator/arena/startOffset
   global.set $~lib/allocator/arena/offset
@@ -619,7 +658,7 @@
   call $~lib/internal/typedarray/TypedArray<u8>#constructor
   global.set $mandelbrot/data
  )
- (func $null (; 9 ;) (type $FUNCSIG$v)
+ (func $null (; 8 ;) (type $FUNCSIG$v)
   nop
  )
 )
