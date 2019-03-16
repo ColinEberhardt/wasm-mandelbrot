@@ -12,7 +12,8 @@ module.exports = async () => {
   const imports = {
     env: {
       memoryBase: 0,
-      memory: allocateMemory()
+      memory: allocateMemory(),
+      abort: () => {}
     }
   };
 
