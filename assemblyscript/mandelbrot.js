@@ -27,23 +27,22 @@ define(["require", "exports"], function (require, exports) {
         return iterations;
     }
     // @inline
-    function scale(domainStart, domainLength, invScreenLength, step) {
-        return domainStart + domainLength * (step * invScreenLength - 1.0);
+    function scale(domainStart, domainLength, screenLength, step) {
+        return domainStart + domainLength * (step * (1 / screenLength) - 1.0);
     }
     function mandelbrot(maxIterations, cx, cy, diameter) {
-        const invWidth = 1.0 / WIDTH;
-        const invHeight = 1.0 / HEIGHT;
-        var verticalDiameter = diameter * HEIGHT * invWidth;
+        var verticalDiameter = diameter * HEIGHT / WIDTH;
         for (let x = 0; x < WIDTH; ++x) {
             for (let y = 0; y < HEIGHT; ++y) {
                 // convert from screen coordinates to mandelbrot coordinates
-                let rx = scale(cx, diameter, invWidth, x);
-                let ry = scale(cy, verticalDiameter, invHeight, y);
+                let rx = scale(cx, diameter, WIDTH, x);
+                let ry = scale(cy, verticalDiameter, HEIGHT, y);
                 let iterations = iterateEquation(rx, ry, maxIterations);
+                let outside = iterations == maxIterations;
                 let idx = (x + y * WIDTH) << 2;
-                data[idx + 0] = iterations == maxIterations ? 0 : colour(iterations, 0, 4);
-                data[idx + 1] = iterations == maxIterations ? 0 : colour(iterations, 128, 4);
-                data[idx + 2] = iterations == maxIterations ? 0 : colour(iterations, 356, 4);
+                data[idx + 0] = outside ? 0 : colour(iterations,   0, 4);
+                data[idx + 1] = outside ? 0 : colour(iterations, 128, 4);
+                data[idx + 2] = outside ? 0 : colour(iterations, 356, 4);
                 data[idx + 3] = 255;
             }
         }

@@ -1,13 +1,11 @@
-import "allocator/arena";
+const WIDTH  = 1200;
+const HEIGHT = 800;
 
-const WIDTH:  i32 = 1200;
-const HEIGHT: i32 = 800;
-
-var data: Uint8Array = new Uint8Array(WIDTH * HEIGHT * 4);
+let data = new Uint8Array(WIDTH * HEIGHT * 4);
 
 @inline
 function colour(iteration: u32, offset: i32, scale: i32): u8 {
-  iteration = (iteration * scale + offset) % 1024;
+  iteration = (iteration * scale + offset) & 1023;
   if (iteration < 256) {
     return iteration as u8;
   } else if (iteration < 512) {
@@ -32,7 +30,7 @@ function iterateEquation(x0: f64, y0: f64, maxiterations: u32): u32 {
 
 @inline
 function scale(domainStart: f64, domainLength: f64, screenLength: f64, step: f64): f64 {
-  return domainStart + domainLength * ((step - screenLength) / screenLength);
+  return domainStart + domainLength * (step * (1.0 / screenLength) - 1);
 }
 
 export function mandelbrot(maxIterations: u32, cx: f64, cy: f64, diameter: f64): void {
