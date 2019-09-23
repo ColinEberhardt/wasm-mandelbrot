@@ -1,13 +1,11 @@
-import "allocator/arena";
+const WIDTH  = 1200;
+const HEIGHT = 800;
 
-const WIDTH:  i32 = 1200;
-const HEIGHT: i32 = 800;
-
-var data: Uint8Array = new Uint8Array(WIDTH * HEIGHT * 4);
+let data = new Uint8Array(WIDTH * HEIGHT * 4);
 
 @inline
 function colour(iteration: u32, offset: i32, scale: i32): u8 {
-  iteration = (iteration * scale + offset) % 1024;
+  iteration = (iteration * scale + offset) & 1023;
   if (iteration < 256) {
     return iteration as u8;
   } else if (iteration < 512) {
