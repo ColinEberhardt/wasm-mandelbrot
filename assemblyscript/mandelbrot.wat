@@ -418,20 +418,20 @@
       local.get $3
       local.get $5
       f64.convert_i32_s
-      f64.const 1200
+      f64.const 8.333333333333334e-04
+      f64.mul
+      f64.const 1
       f64.sub
-      f64.const 1200
-      f64.div
       f64.mul
       f64.add
       local.get $2
       local.get $10
       local.get $6
       f64.convert_i32_s
-      f64.const 800
+      f64.const 0.00125
+      f64.mul
+      f64.const 1
       f64.sub
-      f64.const 800
-      f64.div
       f64.mul
       f64.add
       local.get $0

@@ -30,7 +30,7 @@ function iterateEquation(x0: f64, y0: f64, maxiterations: u32): u32 {
 
 @inline
 function scale(domainStart: f64, domainLength: f64, screenLength: f64, step: f64): f64 {
-  return domainStart + domainLength * ((step - screenLength) / screenLength);
+  return domainStart + domainLength * (step * (1.0 / screenLength) - 1);
 }
 
 export function mandelbrot(maxIterations: u32, cx: f64, cy: f64, diameter: f64): void {
