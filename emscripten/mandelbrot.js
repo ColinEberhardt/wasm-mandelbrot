@@ -29,9 +29,7 @@ module.exports = async() => {
       const imgData = ctx.createImageData(WIDTH, HEIGHT);
       const offset = instance.exports._getImage();
       const linearMemory = new Uint8Array(imports.env.memory.buffer, offset, WIDTH * HEIGHT * 4);
-      for (let i = 0; i < linearMemory.length; i++) {
-        imgData.data[i] = linearMemory[i];
-      }
+      imgData.data.set(linearMemory);
       ctx.putImageData(imgData, 0, 0);
     },
     name: 'Emscripten',

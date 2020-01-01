@@ -14,9 +14,7 @@ module.exports = async() => {
       const imgData = ctx.createImageData(WIDTH, HEIGHT);
       const offset = instance.exports.getImage();
       const linearMemory = new Uint8Array(instance.exports.memory.buffer, offset, WIDTH * HEIGHT * 4);
-      for (let i = 0; i < linearMemory.length; i++) {
-        imgData.data[i] = linearMemory[i];
-      }
+      imgData.data.set(linearMemory);
       ctx.putImageData(imgData, 0, 0);
     },
     description: 'This implementation creates a minimal wasm module by compiling C using clang / llc and the binaryen tools directly (as opposed to emscripten, that wraps up clang / llc together with its own framework code).'
