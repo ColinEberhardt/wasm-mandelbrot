@@ -12,7 +12,7 @@
   "author": "ceberhardt@scottlogic.com",
   "license": "ISC",
   "devDependencies": {
-    "assemblyscript": "github:AssemblyScript/assemblyscript",
+    "assemblyscript": "^0.8.1-nightly.20200101",
     "glob": "^7.1.2",
     "typescript": "3.x"
   }

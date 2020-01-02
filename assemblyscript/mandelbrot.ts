@@ -1,7 +1,7 @@
 const WIDTH  = 1200;
 const HEIGHT = 800;
 
-let data = new Uint8Array(WIDTH * HEIGHT * 4);
+const data = new Uint8Array(WIDTH * HEIGHT * 4);
 
 @inline
 function colour(iteration: u32, offset: i32, scale: i32): u8 {

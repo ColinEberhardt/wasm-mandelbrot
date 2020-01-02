@@ -1,14 +1,14 @@
 (module
- (type $FUNCSIG$iii (func (param i32 i32) (result i32)))
- (type $FUNCSIG$vi (func (param i32)))
- (type $FUNCSIG$v (func))
- (type $FUNCSIG$viddd (func (param i32 f64 f64 f64)))
- (type $FUNCSIG$iddi (func (param f64 f64 i32) (result i32)))
- (type $FUNCSIG$i (func (result i32)))
- (type $FUNCSIG$ii (func (param i32) (result i32)))
+ (type $i32_=>_none (func (param i32)))
+ (type $none_=>_i32 (func (result i32)))
+ (type $none_=>_none (func))
+ (type $i32_f64_f64_f64_=>_none (func (param i32 f64 f64 f64)))
+ (type $i32_=>_i32 (func (param i32) (result i32)))
+ (type $i32_i32_=>_i32 (func (param i32 i32) (result i32)))
+ (type $f64_f64_i32_=>_i32 (func (param f64 f64 i32) (result i32)))
  (import "env" "memory" (memory $0 1))
- (data (i32.const 8) "\1c\00\00\00\01\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h")
- (data (i32.const 56) "&\00\00\00\01\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
+ (data (i32.const 16) "\1c\00\00\00\01\00\00\00\01\00\00\00\1c\00\00\00I\00n\00v\00a\00l\00i\00d\00 \00l\00e\00n\00g\00t\00h")
+ (data (i32.const 64) "&\00\00\00\01\00\00\00\01\00\00\00&\00\00\00~\00l\00i\00b\00/\00a\00r\00r\00a\00y\00b\00u\00f\00f\00e\00r\00.\00t\00s")
  (global $~lib/rt/stub/startOffset (mut i32) (i32.const 0))
  (global $~lib/rt/stub/offset (mut i32) (i32.const 0))
  (global $mandelbrot/data (mut i32) (i32.const 0))
@@ -17,7 +17,7 @@
  (export "getData" (func $mandelbrot/getData))
  (export "getDataBuffer" (func $mandelbrot/getDataBuffer))
  (start $start)
- (func $~lib/rt/stub/maybeGrowMemory (; 0 ;) (type $FUNCSIG$vi) (param $0 i32)
+ (func $~lib/rt/stub/maybeGrowMemory (; 0 ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   local.get $0
@@ -59,7 +59,7 @@
   local.get $0
   global.set $~lib/rt/stub/offset
  )
- (func $~lib/rt/stub/__alloc (; 1 ;) (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
+ (func $~lib/rt/stub/__alloc (; 1 ;) (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -94,7 +94,7 @@
   local.get $4
   i32.store
   local.get $2
-  i32.const -1
+  i32.const 1
   i32.store offset=4
   local.get $2
   local.get $1
@@ -104,7 +104,7 @@
   i32.store offset=12
   local.get $3
  )
- (func $~lib/memory/memory.fill (; 2 ;) (type $FUNCSIG$vi) (param $0 i32)
+ (func $~lib/memory/memory.fill (; 2 ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
   block $~lib/util/memory/memset|inlined.0
@@ -157,16 +157,18 @@
    i32.and
    local.tee $1
    i32.sub
+   local.set $2
    local.get $0
    local.get $1
    i32.add
    local.tee $0
    i32.const 0
    i32.store
+   local.get $0
+   local.get $2
    i32.const -4
    i32.and
    local.tee $1
-   local.get $0
    i32.add
    i32.const 4
    i32.sub
@@ -247,12 +249,12 @@
    i32.const 0
    i32.store
    local.get $0
+   local.get $0
    i32.const 4
    i32.and
    i32.const 24
    i32.add
    local.tee $2
-   local.get $0
    i32.add
    local.set $0
    local.get $1
@@ -295,7 +297,7 @@
    end
   end
  )
- (func $~lib/arraybuffer/ArrayBufferView#constructor (; 3 ;) (type $FUNCSIG$ii) (param $0 i32) (result i32)
+ (func $~lib/arraybuffer/ArrayBufferView#constructor (; 3 ;) (param $0 i32) (result i32)
   (local $1 i32)
   i32.const 3840000
   i32.const 0
@@ -333,14 +335,14 @@
   i32.store offset=8
   local.get $0
  )
- (func $mandelbrot/iterateEquation (; 4 ;) (type $FUNCSIG$iddi) (param $0 f64) (param $1 f64) (param $2 i32) (result i32)
+ (func $mandelbrot/iterateEquation (; 4 ;) (param $0 f64) (param $1 f64) (param $2 i32) (result i32)
   (local $3 f64)
-  (local $4 f64)
+  (local $4 i32)
   (local $5 f64)
-  (local $6 i32)
+  (local $6 f64)
   (local $7 f64)
   loop $continue|0
-   local.get $6
+   local.get $4
    local.get $2
    i32.lt_u
    if (result i32)
@@ -357,38 +359,38 @@
     i32.const 0
    end
    if
-    local.get $4
     local.get $5
+    local.get $6
     f64.mul
     local.set $3
-    local.get $4
-    local.get $4
+    local.get $5
+    local.get $5
     f64.mul
-    local.get $5
-    local.get $5
+    local.get $6
+    local.get $6
     f64.mul
     f64.sub
     local.get $0
     f64.add
     local.tee $7
-    local.set $4
+    local.set $5
     local.get $3
     local.get $3
     f64.add
     local.get $1
     f64.add
     local.tee $3
-    local.set $5
-    local.get $6
+    local.set $6
+    local.get $4
     i32.const 1
     i32.add
-    local.set $6
+    local.set $4
     br $continue|0
    end
   end
-  local.get $6
+  local.get $4
  )
- (func $mandelbrot/mandelbrot (; 5 ;) (type $FUNCSIG$viddd) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
+ (func $mandelbrot/mandelbrot (; 5 ;) (param $0 i32) (param $1 f64) (param $2 f64) (param $3 f64)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
@@ -437,10 +439,10 @@
       local.get $0
       call $mandelbrot/iterateEquation
       local.set $7
+      local.get $5
       local.get $6
       i32.const 1200
       i32.mul
-      local.get $5
       i32.add
       i32.const 2
       i32.shl
@@ -586,25 +588,22 @@
    end
   end
  )
- (func $mandelbrot/getData (; 6 ;) (type $FUNCSIG$i) (result i32)
+ (func $mandelbrot/getData (; 6 ;) (result i32)
   global.get $mandelbrot/data
  )
- (func $mandelbrot/getDataBuffer (; 7 ;) (type $FUNCSIG$i) (result i32)
+ (func $mandelbrot/getDataBuffer (; 7 ;) (result i32)
   global.get $mandelbrot/data
   i32.load
  )
- (func $start (; 8 ;) (type $FUNCSIG$v)
-  i32.const 112
+ (func $start (; 8 ;)
+  i32.const 128
   global.set $~lib/rt/stub/startOffset
-  i32.const 112
+  i32.const 128
   global.set $~lib/rt/stub/offset
   i32.const 12
   i32.const 3
   call $~lib/rt/stub/__alloc
   call $~lib/arraybuffer/ArrayBufferView#constructor
   global.set $mandelbrot/data
- )
- (func $null (; 9 ;) (type $FUNCSIG$v)
-  nop
  )
 )
