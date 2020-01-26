@@ -16,7 +16,7 @@
  (export "mandelbrot" (func $mandelbrot/mandelbrot))
  (export "getData" (func $mandelbrot/getData))
  (export "getDataBuffer" (func $mandelbrot/getDataBuffer))
- (start $start)
+ (start $~start)
  (func $~lib/rt/stub/maybeGrowMemory (; 0 ;) (param $0 i32)
   (local $1 i32)
   (local $2 i32)
@@ -261,7 +261,7 @@
    local.get $2
    i32.sub
    local.set $1
-   loop $continue|0
+   loop $while-continue|0
     local.get $1
     i32.const 32
     i32.ge_u
@@ -292,7 +292,7 @@
      i32.const 32
      i32.add
      local.set $0
-     br $continue|0
+     br $while-continue|0
     end
    end
   end
@@ -341,7 +341,7 @@
   (local $5 f64)
   (local $6 f64)
   (local $7 f64)
-  loop $continue|0
+  loop $while-continue|0
    local.get $4
    local.get $2
    i32.lt_u
@@ -385,7 +385,7 @@
     i32.const 1
     i32.add
     local.set $4
-    br $continue|0
+    br $while-continue|0
    end
   end
   local.get $4
@@ -404,14 +404,14 @@
   f64.const 1200
   f64.div
   local.set $10
-  loop $loop|0
+  loop $for-loop|0
    local.get $6
    i32.const 800
    i32.lt_s
    if
     i32.const 0
     local.set $5
-    loop $loop|1
+    loop $for-loop|1
      local.get $5
      i32.const 1200
      i32.lt_s
@@ -577,14 +577,14 @@
       i32.const 1
       i32.add
       local.set $5
-      br $loop|1
+      br $for-loop|1
      end
     end
     local.get $6
     i32.const 1
     i32.add
     local.set $6
-    br $loop|0
+    br $for-loop|0
    end
   end
  )
@@ -595,7 +595,7 @@
   global.get $mandelbrot/data
   i32.load
  )
- (func $start (; 8 ;)
+ (func $~start (; 8 ;)
   i32.const 128
   global.set $~lib/rt/stub/startOffset
   i32.const 128
