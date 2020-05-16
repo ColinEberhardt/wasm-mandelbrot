@@ -6,14 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-tsc": "npx tsc",
-    "build-asc": "npx asc mandelbrot.ts -b mandelbrot.wasm -t mandelbrot.wat -O3 --runtime none --importMemory --validate",
+    "build-asc": "npx asc mandelbrot.ts -b mandelbrot.wasm -t mandelbrot.wat -O3 --runtime none --importMemory",
     "build": "npm run build-asc && npm run build-tsc"
   },
   "author": "ceberhardt@scottlogic.com",
   "license": "ISC",
   "devDependencies": {
-    "assemblyscript": "^0.9.0",
+    "assemblyscript": "^0.10.0",
     "glob": "^7.1.2",
-    "typescript": "3.x"
+    "typescript": "^3.9.2"
   }
 }
