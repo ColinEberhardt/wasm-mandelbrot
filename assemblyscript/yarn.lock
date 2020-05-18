@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-assemblyscript@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.9.0.tgz#2c85f0ff3bad7385484007d10ac65d29416f46c2"
-  integrity sha512-HDDoaDfdnp0Ki/k272ib12sKz3ytVlXsIDise5meamInLC1qZAcmwwO+aqNyiVksmPYyLhQlaVZRPKWibHqo3g==
+assemblyscript@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.10.0.tgz#0d2a0591be77fdd294d720172e307e526a559ba8"
+  integrity sha512-ErUNhHboD+zsB4oG6X1YICDAIo27Gq7LeNX6jVe+Q0W5cI51/fHwC8yJ68IukqvupmZgYPdp1JqqRXlS+BrUfA==
   dependencies:
-    binaryen "90.0.0-nightly.20200111"
+    binaryen "93.0.0-nightly.20200514"
     long "^4.0.0"
 
 balanced-match@^1.0.0:
@@ -15,10 +15,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-binaryen@90.0.0-nightly.20200111:
-  version "90.0.0-nightly.20200111"
-  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-90.0.0-nightly.20200111.tgz#dc5cfa53a7c2cb97a785a64ca041effd6ae66c4a"
-  integrity sha512-2uihf1tqfkG2OJB54LjIDu5/fqbGgbj9VSwnj8hYtsRfML61y0uHeMkPfWctyl99m7hsgyDu7xUbJ7iyqBz6BA==
+binaryen@93.0.0-nightly.20200514:
+  version "93.0.0-nightly.20200514"
+  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-93.0.0-nightly.20200514.tgz#af498b5d9f8169254fb0cd385061d94ba9b27b1d"
+  integrity sha512-SRRItmNvhRVfoWWbRloO4i8IqkKH8rZ7/0QWRgLpM3umupK8gBpo9MY7Zp3pDysRSp+rVoqxvM5x4tFyCSa9zw==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -87,10 +87,10 @@ path-is-absolute@^1.0.0:
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
-typescript@3.x:
-  version "3.3.3333"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3333.tgz#171b2c5af66c59e9431199117a3bcadc66fdcfd6"
-  integrity sha512-JjSKsAfuHBE/fB2oZ8NxtRTk5iGcg6hkYXMnZ3Wc+b2RSqejEqTaem11mHASMnFilHrax3sLK0GDzcJrekZYLw==
+typescript@^3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.2.tgz#64e9c8e9be6ea583c54607677dd4680a1cf35db9"
+  integrity sha512-q2ktq4n/uLuNNShyayit+DTobV2ApPEo/6so68JaD5ojvc/6GClBipedB9zNWYxRSAlZXAe405Rlijzl6qDiSw==
 
 wrappy@1:
   version "1.0.2"
